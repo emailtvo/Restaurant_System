@@ -101,7 +101,7 @@ public class LoginWindow extends javax.swing.JFrame {
             //Reset the login view
             lblError.setVisible(false);
             txtPasswordEntry.setText("");
-            this.setVisible(false);
+            this.dispose();
 
             //Launch window depending on user type
             if (userType[0].equals("mgr")) {
