@@ -27,7 +27,8 @@ public class LoginProcessor {
     public String[] determineUserTypeAndName() throws FileNotFoundException {
         String temp = "";
         String[] userInfo = new String[2];
-        File storedUsersFile = new File(System.getProperty("user.dir") + "\\users.dat");
+        File storedUsersFile = new File(System.getProperty("user.dir") + 
+                System.getProperty("file.separator") + "users.dat");
         cin = new Scanner(storedUsersFile);
 
         while (cin.hasNextLine()) {
