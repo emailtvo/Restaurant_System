@@ -29,7 +29,8 @@ public class FoodItem {
 
     private double determineItemPrice(String nameOfItem) throws FileNotFoundException {
         //Open prices file
-        File storedPricesFile = new File(System.getProperty("user.dir") + "\\prices.dat"); //$NON-NLS-1$
+        File storedPricesFile = new File(System.getProperty("user.dir") +
+                System.getProperty("file.separator") + "prices.dat"); //$NON-NLS-1$
         Scanner cin = new Scanner(storedPricesFile);
         String temp;
         String price = "0";
