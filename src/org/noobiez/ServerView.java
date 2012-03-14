@@ -4,11 +4,24 @@
  */
 package org.noobiez;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JComboBox;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableModel;
+
 /**
  *
  * @author Thanh
  */
 public class ServerView extends javax.swing.JFrame {
+
+    static private int currentRow = 0;
 
     /**
      * Creates new form ServerView
@@ -27,26 +40,51 @@ public class ServerView extends javax.swing.JFrame {
     private void initComponents() {
 
         btnAdd = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox();
-        jComboBox2 = new javax.swing.JComboBox();
-        jComboBox3 = new javax.swing.JComboBox();
+        cmbTableNum = new javax.swing.JComboBox();
+        cmbEntrees = new javax.swing.JComboBox();
+        cmbQty = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         btnCancelOrder = new javax.swing.JButton();
         btnLogOut = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnAdd.setText("Add");
+        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddActionPerformed(evt);
+            }
+        });
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbTableNum.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
+        cmbTableNum.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbTableNumActionPerformed(evt);
+            }
+        });
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbEntrees.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "brgSwiss", "fries", "rice", "sushi" }));
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
+        cmbQty.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" }));
 
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
@@ -64,9 +102,15 @@ public class ServerView extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
+        table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(table);
 
         btnCancelOrder.setText("Cancel Order");
+        btnCancelOrder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelOrderActionPerformed(evt);
+            }
+        });
 
         btnLogOut.setText("Log Out");
         btnLogOut.addActionListener(new java.awt.event.ActionListener() {
@@ -75,47 +119,57 @@ public class ServerView extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Table #");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
+                .addGap(13, 13, 13)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbEntrees, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(cmbQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(btnAdd)
+                        .addComponent(btnAdd))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCancelOrder)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnLogOut))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                        .addComponent(cmbTableNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnCancelOrder)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLogOut))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnAdd)
-                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCancelOrder)
-                    .addComponent(btnLogOut))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(63, 63, 63)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnLogOut)
+                            .addComponent(btnCancelOrder)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cmbTableNum, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnAdd)
+                            .addComponent(cmbEntrees, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -127,6 +181,127 @@ public class ServerView extends javax.swing.JFrame {
         new LoginWindow().setVisible(true);
     }//GEN-LAST:event_btnLogOutActionPerformed
 
+    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+        if (!cmbTableNum.getSelectedItem().equals("")
+                && !cmbEntrees.getSelectedItem().equals("")) //Check to make sure table is selected
+        {
+            Order newOrder = new Order(Integer.valueOf((String) cmbTableNum.getSelectedItem()));
+
+            try {
+                newOrder.addItem((String) cmbTableNum.getSelectedItem(),
+                        (String) cmbEntrees.getSelectedItem(), Integer.valueOf((String) cmbQty.getSelectedItem()));
+            } catch (NumberFormatException e1) {
+                // TODO Auto-generated catch block 
+                e1.printStackTrace();
+            } catch (IOException e1) { // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+
+
+            String[] orderDetails = {Integer.toString(newOrder.getTableNumber()),
+                (String) cmbQty.getSelectedItem(),
+                (String) cmbEntrees.getSelectedItem(), newOrder.getPriceAsString()};
+
+            if (currentRow + 1 < table.getRowCount() - 1) {
+                ((DefaultTableModel) table.getModel()).insertRow(currentRow, orderDetails);
+            } else {
+                ((DefaultTableModel) table.getModel()).addRow(orderDetails);
+            }
+        }
+    }//GEN-LAST:event_btnAddActionPerformed
+
+        private void btnCancelOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelOrderActionPerformed
+            int selection = table.getSelectedRow();
+
+            if (selection != -1) {
+
+                String lineToRemove = "";
+                lineToRemove = "TABLE" + table.getValueAt(selection, 0) + " ";
+
+                for (int i = 1; i < 4; ++i) {
+                    lineToRemove += table.getValueAt(selection, i) + " ";
+                }
+
+                ((DefaultTableModel) table.getModel()).removeRow(selection);
+
+                File orderFile = new File(System.getProperty("user.dir")
+                        + System.getProperty("file.separator") + "orders.dat");
+                FileUtil fileUtil = new FileUtil();
+                fileUtil.removeLineFromFile(orderFile.getAbsolutePath(), lineToRemove.trim());
+            }
+    }//GEN-LAST:event_btnCancelOrderActionPerformed
+
+    private void clearTable() {
+        ((DefaultTableModel) table.getModel()).setRowCount(0); //Clears old data
+        
+        // Sets empty cells to fill in white space
+        table.setModel(new javax.swing.table.DefaultTableModel(
+                new Object[][]{
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null},
+                    {null, null, null, null}
+                },
+                new String[]{
+                    "Table #", "Qty", "Item", "Price"
+                }));
+    }
+
+    /**
+     * This method populates the table in the current view with the current
+     * orders.
+     *
+     * @param table- the table that is going to be re-populated
+     * @throws FileNotFoundException
+     */
+    private void populateTable(int tableNum) throws FileNotFoundException {
+        clearTable();
+
+        File orderFile = new File(System.getProperty("user.dir")
+                + System.getProperty("file.separator") + "orders.dat");
+        Scanner cin = new Scanner(orderFile);
+        String temp = "";
+
+        while (cin.hasNext()) {
+            temp = cin.next();
+
+            if (temp.equals("TABLE" + tableNum)) {
+                String[] orderDetails = new String[4];
+                orderDetails[0] = Integer.toString(tableNum);
+
+                for (int i = 1; i < 4; ++i) {
+                    orderDetails[i] = cin.next();
+                }
+
+                ((DefaultTableModel) table.getModel()).insertRow(currentRow, orderDetails);
+            }
+        }
+
+        cin.close();
+    }
+
+    private void cmbTableNumActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTableNumActionPerformed
+        JComboBox cmbTableNumber = (JComboBox) evt.getSource();
+        try {
+            populateTable(1 + cmbTableNumber.getSelectedIndex());
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(ServerView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cmbTableNumActionPerformed
     /**
      * @param args the command line arguments
      */
@@ -145,6 +320,14 @@ public class ServerView extends javax.swing.JFrame {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
+
+
+
+
+
+
+
+
                 }
             }
         } catch (ClassNotFoundException ex) {
@@ -172,9 +355,10 @@ public class ServerView extends javax.swing.JFrame {
     private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnCancelOrder;
     private javax.swing.JButton btnLogOut;
-    private javax.swing.JComboBox jComboBox1;
-    private javax.swing.JComboBox jComboBox2;
-    private javax.swing.JComboBox jComboBox3;
+    private javax.swing.JComboBox cmbEntrees;
+    private javax.swing.JComboBox cmbQty;
+    private javax.swing.JComboBox cmbTableNum;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables

@@ -40,7 +40,8 @@ public class Order {
     }
 
     private void writeOrderDetails(String[] orderDetails) throws IOException {
-        File orderFile = new File(System.getProperty("user.dir") + "\\orders.dat"); //$NON-NLS-1$
+        File orderFile = new File(System.getProperty("user.dir") + 
+                System.getProperty("file.separator") + "orders.dat"); 
         FileWriter fout = new FileWriter(orderFile, true);
 
         Scanner cin = new Scanner(orderFile);
