@@ -43,6 +43,12 @@ public class LoginWindow extends javax.swing.JFrame {
             }
         });
 
+        txtPasswordEntry.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPasswordEntryActionPerformed(evt);
+            }
+        });
+
         lblError.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         lblError.setForeground(new java.awt.Color(255, 0, 0));
         lblError.setText("Invalid Login");
@@ -121,6 +127,11 @@ public class LoginWindow extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    // Accept Button code
+    private void txtPasswordEntryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordEntryActionPerformed
+        btnLoginActionPerformed(evt);
+    }//GEN-LAST:event_txtPasswordEntryActionPerformed
 
     /**
      * @param args the command line arguments
