@@ -64,6 +64,9 @@
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtPasswordEntry">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPasswordEntryActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblError">
       <Properties>

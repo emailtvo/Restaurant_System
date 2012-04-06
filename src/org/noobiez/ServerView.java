@@ -26,6 +26,7 @@ public class ServerView extends javax.swing.JFrame {
      */
     public ServerView() {
         initComponents();
+        cmbTableNum.setSelectedItem(null);
     }
 
     /**
